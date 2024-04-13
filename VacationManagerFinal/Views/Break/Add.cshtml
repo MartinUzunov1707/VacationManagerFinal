@@ -1,0 +1,47 @@
+﻿@using VacationManagerFinal.Data.ViewModels;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model BreakViewModel
+
+<h1>Request Break</h1>
+
+<form enctype="multipart/form-data" method="post">
+    <div class="mt-3">
+        <label asp-for="DateFrom">Start of break:</label>
+        <input asp-for="DateFrom" class="input" type="date" />
+        <span asp-validation-for="DateFrom"></span>
+    </div>
+    <div class="mt-3">
+        <label asp-for="DateTo">End of break:</label>
+        <input asp-for="DateTo" class="input" type="date" />
+        <span asp-validation-for="DateTo"></span>
+    </div>
+
+    <div class="mt-3">
+        <div class="form-group">
+            <label asp-for="HalfDay">Half day:</label>
+            <input asp-for="HalfDay" class="form-check-input" />
+            <span asp-validation-for="HalfDay" class="form-check-label"></span>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <label class="form-label">Type of break:</label>
+        <input type="text" class="form-control" asp-for="BreakType" />
+    </div>
+    <div class="mt-3">
+        <label class="form-label">Upload medical document:</label>
+        <input asp-for="Image" type="file" >
+    </div>
+
+    <div class="mt-3">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</form>
+
+
+
+

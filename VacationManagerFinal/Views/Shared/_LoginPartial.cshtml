@@ -1,0 +1,77 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using VacationManager.Data.Models
+@inject SignInManager<Employee> SignInManager
+@inject UserManager<Employee> UserManager
+
+<ul class="navbar-nav">
+@if (SignInManager.IsSignedIn(User))
+{
+        @if (User.IsInRole("CEO"))
+        {
+            <li>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle me-4" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Manage
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" asp-controller="Employee" asp-action="All">All Employees</a></li>
+                        <li><a class="dropdown-item" asp-controller="Teams" asp-action="All">All Teams</a></li>
+                        <li><a class="dropdown-item" asp-controller="Project" asp-action="All">All Projects</a></li>
+                        <li><hr class="dropdown-divider"></hr></li>
+                        <li class = "dropend">
+                            <div class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                   Breaks
+                                </a>
+
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <li><a class="dropdown-item" asp-controller="Break" asp-action="Add">Request Break</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Break" asp-action="Manage">Manage Breaks</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Break" asp-action="All">All Breaks</a></li>
+                            </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </li> 
+        }
+        else if(User.IsInRole("Team Lead"))
+        {
+            <li>
+                <a class="btn btn-primary me-4" asp-controller="Break" asp-action="All">Your Breaks</a>
+            </li>
+            <li>
+                <a class="btn btn-primary me-4" asp-controller="Break" asp-action="Manage">Manage Breaks</a>
+            </li>
+            <li>
+                <a class="btn btn-primary me-4" asp-controller="Break" asp-action="Add">Request Break</a>
+            </li>
+        }
+        else if(User.IsInRole("Developer"))
+        {
+            <li>
+                <a class="btn btn-primary me-4" asp-controller="Break" asp-action="All">Your Breaks</a>
+            </li>
+            <li>
+                <a class="btn btn-primary me-4" asp-controller="Break" asp-action="Add">Request Break</a>
+            </li>
+        }
+        <li class="nav-item">
+        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+    </li>
+        <li class="nav-item">
+        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+        </form>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    </li>
+}
+</ul>

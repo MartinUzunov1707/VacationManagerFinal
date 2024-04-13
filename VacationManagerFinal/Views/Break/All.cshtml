@@ -1,0 +1,73 @@
+﻿@using VacationManager.Data.Models
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<Break>
+
+    
+@if (Model.Count > 0)
+{
+    <h1>
+        All Breaks
+    </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Begining</th>
+                <th>End</th>
+                <th>Day of request</th>
+                <th>Half day</th>
+                <th>Status</th>
+                <th>Requestee</th>
+                <th>Type of break</th>
+                <th>Additional information</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var currentBreak in Model)
+            {
+                <tr>
+                    <td>@currentBreak.DateFrom.ToShortDateString()</td>
+                    <td>@currentBreak.DateTo.ToShortDateString()</td>
+                    <td>@currentBreak.RequestDate.ToShortDateString()</td>
+                    <td>@currentBreak.HalfDay</td>
+                    @if(currentBreak.Accepted){
+                        <td>Accepted</td>
+                    }
+                    else{
+                        <td>Pending</td>
+                    }
+                    <td>@currentBreak.Requestee.Email</td>
+                    <td>@currentBreak.BreakType</td>
+                    <td>
+                        @if(currentBreak.Image is not null)
+                        {
+                            <form method="post" class="d-inline">
+                                <button type="submit" asp-controller="Break" asp-action="Download" asp-route-id="@currentBreak.ID" class="btn btn-dark">
+                                    Download
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            <p>None.</p>
+                        }
+
+                    </td>
+                    <td>
+                        <form method="post" class="d-inline">
+                            <button type="submit" class="btn btn-danger" asp-action="Delete" asp-controller="Break" asp-route-id="@currentBreak.ID">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h1>No breaks pending.</h1>
+}

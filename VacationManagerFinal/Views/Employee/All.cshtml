@@ -1,0 +1,42 @@
+﻿@using VacationManager.Data.Models
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model List<Employee>
+@if (Model.Count > 0)
+{
+    <h1>Employees</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Team</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                <tr>
+                    <td>@employee.Id</td>
+                    <td>@employee.UserName</td>
+                    <td>@employee.CurrentTeam</td>
+                    <td>
+                        <a class="btn btn-primary me-3" asp-controller="Employee" asp-action="Edit" asp-route-id="@employee.Id">Edit</a>
+                        <form method="post" class="d-inline">
+                            <button type="submit" class="btn btn-danger" asp-action="Delete" asp-controller="Employee" asp-route-id="@employee.Id">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h1>No employees found.</h1>
+}
